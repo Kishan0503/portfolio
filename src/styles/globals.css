@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Palette mirrored as CSS vars so canvas / 3D / JS can read them */
+  --bg-base: #05060a;
+  --bg-panel: #0a0b14;
+  --deep-blue: #0b1e3f;
+  --deep-blue-bright: #1a2b6b;
+  --purple: #7c3aed;
+  --purple-bright: #a855f7;
+  --cyan: #22d3ee;
+  --glass: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --text-primary: #f5f6fa;
+  --text-muted: #9aa3b2;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Lenis controls scroll; let it manage smoothness */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: rgba(124, 58, 237, 0.4);
+    color: #fff;
+  }
+
+  /* Visible keyboard focus for all interactive elements */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--purple-bright);
+    outline-offset: 2px;
+    border-radius: 0.4rem;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg-base);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--purple), var(--deep-blue-bright));
+    border-radius: 8px;
+  }
+}
+
+@layer components {
+  /* Frosted glass panel — used across cards, dashboard tiles, chatbot, contact */
+  .glass {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 1rem;
+    box-shadow: 0 0 40px -16px rgba(124, 58, 237, 0.35),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .glass-hover {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .glass-hover:hover {
+    border-color: rgba(168, 85, 247, 0.35);
+    box-shadow: 0 0 50px -10px rgba(124, 58, 237, 0.5),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.07);
+    transform: translateY(-3px);
+  }
+
+  /* Gradient text for headings/accents */
+  .text-gradient {
+    background: linear-gradient(120deg, #f5f6fa 0%, #a855f7 55%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Section vertical rhythm */
+  .section-pad {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+  @media (min-width: 768px) {
+    .section-pad {
+      padding-top: 8rem;
+      padding-bottom: 8rem;
+    }
+  }
+}
+
+@layer utilities {
+  .eyebrow {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 0.72rem;
+    color: var(--purple-bright);
+  }
+}
+
+/* Accessibility: neutralize heavy motion when the user prefers reduced motion.
+   Particle/3D modules also check this via the useReducedMotion hook. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
