@@ -113,7 +113,7 @@ export default function Hero() {
 
         {/* living AI avatar — particle/network face that emerges from the background */}
         <div
-          className={`relative mx-auto aspect-square w-full max-w-md transition-all duration-1000 ease-out ${
+          className={`relative mx-auto aspect-[4/5] w-full max-w-xl transition-all duration-1000 ease-out ${
             reveal ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
           }`}
         >
